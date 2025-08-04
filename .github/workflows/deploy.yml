@@ -1,0 +1,20 @@
+name: Hello World Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+        - name: connect via ssh and create hello.txt
+          uses: appleboy/ssh-action@v0.1.0
+          with:
+            host: ${{secrets.DROPLET_IP}}
+            username: ${{secrets.USERNAME}}
+            key: ${{secrets.DROPLET_SSH_KEY}}
+            script: |
+                   mkdir -p /home/${{secrets.USERNAME}}/github-test
+                     echo "Hello from github actions" > /home/${{secrets.USERNAME}}/github-test/hello.txt
